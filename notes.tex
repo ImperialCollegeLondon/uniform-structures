@@ -1,0 +1,35 @@
+\documentclass[12pt,a4paper]{article}
+%\usepackage[margin=1.7cm]{geometry}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\R}{\mathbb{R}}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\SL}{SL}
+%\pagestyle{empty}
+\usepackage{titlesec}
+%\titleformat*{\section}{\large\bfseries}
+\begin{document}
+\begin{center}{\Large\bf{Notes on uniform structures}}\end{center}
+
+Let $X$ be a set (or a type). There's something called a \emph{uniform structure} on $X$, but different authors appear to use the phrase differently. One thing that everyone is agreed on is that a \emph{uniform space} is a set or type $X$, equipped with a uniform structure.
+
+Three definitions of a uniform space can be found on \href{https://en.wikipedia.org/wiki/Uniform_space}{Wikipedia}. 
+
+The first one (the only one I knew about, two weeks ago) defines a uniform structure on~$X$ to be a collection of \emph{entourages}, which are subsets of $X\times X$ obeying a bunch of axioms. This definition is very much reminiscent of the definition of a topological space as a collection of \emph{open sets}, which are subsets of $X$ obeying the axioms for a topology. Some of the axioms for the sets in a uniform structure are that these sets form a \emph{filter} on $X\times X$, and this can be used to simplify the definition a bit. One of the axioms stands out -- if $U$ is an entourage, and $U\subset V$, then $V$ must also be an entourage.
+
+Say we are given a uniform structure on $X$, i.e. a bunch of entourages. A set $B$ of these entourges is called a \emph{basis} for the uniform structure if for every entourage in the uniform structure, there's an element of $B$ which is a subset of it.
+
+{\bf Key example.} Let $X$ be given the structure of a metric space (i.e. say we have $d:X^2\to\R$ satisfying the usual axioms). Then let's say that $U\subset X\times X$ is an \emph{entourage} if there exists some $\epsilon>0$ such that the set $d^{-1}([0,\epsilon]$ is a subset of $U$. More concretely, this says that $U$ is an entourage if there exists $\epsilon>0$ such that if $x,y\in X$ and $d(x,y)<\epsilon$ then $(x,y)\in U$.
+
+{\bf Exercises}
+
+Note: you might want to do (3) first.
+
+1) Check this this construction of entourages does give us a collection of entourages which satisfy the axioms of a uniform strucure as in Wikipedia.
+
+2) Check that the sets $d^{-1}([0,\epsilon])$ form a basis for this uniform structure.
+
+3) Check that everything still works for pseudometrics too (i.e. we never used the axiom $d(x,y)=0\iff x=y$ in the key example or (1) and (2)). 
+
+\end{document}
