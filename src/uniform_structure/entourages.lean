@@ -11,21 +11,20 @@ We then give the entourage definition of a uniform space
 
 -/
 
-section comp_rel -- composing relations
+-- We first define U ∘ V. First the function itself (called `comp_ent`)
 
 /-- composition `∘` of two subsets of X × X -/
-def comp_rel {X : Type} (U V : set (X×X)) :=
+def comp_ent {X : Type} (U V : set (X×X)) :=
   {p : X × X | ∃z : X, (p.1, z) ∈ U ∧ (z, p.2) ∈ V}
 
-notation U ` ∘ ` V := comp_rel U V
+-- and now the notation
+notation U ` ∘ ` V := comp_ent U V
 
 variables {X : Type} {U V : set (X × X)} {x y : X}
 
 /-- This is the theorem which gives the defining property of U ∘ V -/
-@[simp] theorem mem_comp_rel :
+@[simp] theorem mem_comp_ent :
   (x, y) ∈ U ∘ V ↔ ∃ z, (x, z) ∈ U ∧ (z, y) ∈ V := iff.rfl -- true by definition
-
-end comp_rel -- that should be all we need
 
 structure uniform_space_entourage (X : Type) :=
 (entourages : set (set (X × X)))
@@ -34,5 +33,5 @@ structure uniform_space_entourage (X : Type) :=
 (bigger : ∀ U V : set (X × X), U ∈ entourages → U ⊆ V → V ∈ entourages)
 (inter : ∀ U V ∈ entourages, U ∩ V ∈ entourages)
 (comp : ∀ U ∈ entourages, ∃ V ∈ entourages, V ∘ V ⊆ U)
-(symm : ∀ U ∈ entourages, {z : X × X | prod.swap z ∈ U} ∈ entourages)
+(symm : ∀ U ∈ entourages, {z : X × X | (z.2, z.1) ∈ U} ∈ entourages)
 

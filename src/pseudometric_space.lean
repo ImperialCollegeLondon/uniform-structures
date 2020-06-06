@@ -1,46 +1,52 @@
-import topology.metric_space.baire
-
-#check metric_space
+import topology.metric_space.basic
 
 /-!
 
 # Pseudometric spaces
 
-A pseudometric on a set is a distance function obeying
+A pseudometric on a set (or type) X is a distance function obeying
 all the axioms of a metric except possible d(x,y)=0 ↔ x = y.
 
 -/
 
--- `has_dist X` just means "X has a distance function called `dist`"
+/-- A function d : X^2 → ℝ is a *pseudometric* if it satisfies the axioms
+  for a metric space apart from possibly the axiom saying d(x,y)=0 -> x=y -/ 
+class is_pseudometric {X : Type} (d : X → X → ℝ) :=
+(d_self : ∀ x : X, d x x = 0)
+(d_comm : ∀ x y : X, d x y = d y x)
+(d_triangle : ∀ x y z : X, d x z ≤ d x y + d y z)
 
-/-- A pseudometric space is a metric space without the axiom that d(x,y)=0 -> x=y -/ 
-class pseudometric_space (X : Type) extends has_dist X :=
-(dist_self : ∀ x : X, dist x x = 0)
-(dist_comm : ∀ x y : X, dist x y = dist y x)
-(dist_triangle : ∀ x y z : X, dist x z ≤ dist x y + dist y z)
+-- ignore this boilerplate code: it's restating the lemmas to make them easier to use
 
--- fun fact: we never included the axiom that dist x y ≥ 0, because it follows
+variable {X : Type}
+
+lemma d_self (d : X → X → ℝ) [is_pseudometric d] :
+  ∀ x : X, d x x = 0 := @is_pseudometric.d_self X d _
+
+lemma d_comm (d : X → X → ℝ) [is_pseudometric d] :
+  ∀ x y : X, d x y = d y x := @is_pseudometric.d_comm X d _
+
+lemma d_triangle (d : X → X → ℝ) [is_pseudometric d] :
+  ∀ x y z : X, d x z ≤ d x y + d y z := @is_pseudometric.d_triangle X d _
+
+-- fun fact: we never included the axiom that d x y ≥ 0, because it follows
 -- from the other axioms!
 
-namespace pseudometric_space
+variables (d : X → X → ℝ) [is_pseudometric d]
 
-variables (X : Type) [pseudometric_space X]
-
-theorem dist_nonneg {x y : X} : 0 ≤ dist x y :=
+theorem d_nonneg {x y : X} : 0 ≤ d x y :=
 begin
 
   -- First note 0 = d(x,x) ≤ d(x,y)+d(y,x) = 2d(x,y)
 
-  have h2 : 0 ≤ 2 * dist x y,
-    calc 0 = dist x x : by rw dist_self
-    ...    ≤ dist x y + dist y x : dist_triangle x y x
-    ...    = dist x y + dist x y : by rw dist_comm
-    ...    = 2 * dist x y : by ring,
+  have h2 : 0 ≤ 2 * d x y,
+    calc 0 = d x x : by rw d_self d
+    ...    ≤ d x y + d y x : by refine d_triangle d _ _ _
+    ...    = d x y + d x y : by rw d_comm d
+    ...    = 2 * d x y : by ring,
 
   -- and now the result is obvious
 
   linarith
 end
-
-end pseudometric_space
 
