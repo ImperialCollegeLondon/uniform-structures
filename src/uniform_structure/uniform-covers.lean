@@ -37,7 +37,7 @@ Given a uniform space in the entourage sense, define a cover P to be uniform if 
 -/
 
 /-- A distinguished family of covers for a set X is a filter for <*  -/
-structure dist_cover (X : Type) :=
+structure dist_covers (X : Type) :=
 -- collection of covers
 (Θ : set (cover X) )
 -- {X} is in Θ
@@ -46,7 +46,3 @@ structure dist_cover (X : Type) :=
 (star_mem (P Q : cover X) (hP : P ∈ Θ) (hPQ : P <* Q) : Q ∈ Θ)
 -- if P, Q ∈ Θ then there exists R ∈ Θ with P <* R and Q <* R
 (ub_mem (P Q : cover X) (hP : P ∈ Θ) (hQ : Q ∈ Θ) : ∃ R : cover X, R ∈ Θ ∧ P <* R ∧ Q <* R)
-
-
-
-#exit
