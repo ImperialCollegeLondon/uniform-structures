@@ -6,7 +6,7 @@ open set
 /-- a cover of X is a set of subsets of X whose union is X -/
 structure cover (X : Type) :=
 (C : set (set X))
-(cov : (⋃ (c ∈ C), c) = set.univ)
+(cov : ∀ x : X, ∃ U ∈ C, x ∈ U)
 
 -- note that the subset X of X isn't called X! X is a type. The subset X of X
 -- is called `univ`
