@@ -38,10 +38,23 @@ lemma mem_entourages (U : set (X × X)) :
 lemma refl (U : set (X × X)) (hU : U ∈ entourages d) :
   ∀ (x : X), (x, x) ∈ U :=
 begin
+  rw mem_entourages at hU,
   obtain ⟨ε, hε, hεU⟩ := hU,
   intro x,
   apply hεU,
   rw d_self d,
+  linarith
+end
+
+lemma refl' (U : set (X × X)) (hU : U ∈ entourages d) :
+  ∀ (x : X), (x, x) ∈ U :=
+begin
+  intro x,
+  have hx : d x x = 0,
+    exact d_self d x,
+  obtain ⟨ε, hε, hεU⟩ := hU,
+  apply hεU,
+  rw hx,
   linarith
 end
 
