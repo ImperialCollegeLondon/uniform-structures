@@ -63,34 +63,14 @@ end
 lemma bigger (U V : set (X × X)) (hU : U ∈ entourages d) (hUV : U ⊆ V) :
   V ∈ entourages d :=
 begin
-  obtain ⟨ε, hε, hεU⟩ := hU,
-  rw mem_entourages,
-  use ε,
-  use hε,
-  intros x y hxy,
-  apply hUV,
-  apply hεU,
-  assumption,
+  sorry
 end
 
 -- Axiom 3: Intersection of two entourages is an entourage
 lemma inter (U V : set (X × X)) (hU : U ∈ entourages d) (hV : V ∈ entourages d) :
   U ∩ V ∈ entourages d :=
 begin
-  rw mem_entourages at ⊢ hU hV,
-  obtain ⟨ε₁, hε₁, hε₁U⟩ := hU,
-  obtain ⟨ε₂, hε₂, hε₂V⟩ := hV,
-  use (min ε₁ ε₂),
-  split, apply lt_min; assumption,
-  intros x y hxy,
-  rw le_min_iff at hxy,
-  split,
-  { apply hε₁U,
-    exact hxy.1
-  },
-  { apply hε₂V,
-    exact hxy.2
-  }
+  sorry
 end
 
 -- Axiom 4: the "square root" axiom. 
@@ -98,28 +78,14 @@ end
 lemma comp (U : set (X × X)) (hU : U ∈ entourages d) :
  ∃ (V : set (X × X)) (H : V ∈ entourages d), V ∘ V ⊆ U :=
 begin
-  obtain ⟨ε, hε, hεU⟩ := hU,
-  use {z : X × X | d z.1 z.2 ≤ ε/2},
-  split, use ε/2, split, linarith, intros, assumption,
-  rintro ⟨x,y⟩ h,
-  apply hεU,
-  rw mem_comp_ent at h,
-  rcases h with ⟨z, hxz, hzy⟩,
-  dsimp at *, 
-  calc d x y ≤ d x z + d z y : d_triangle d x z y
-    ...      ≤ ε : by linarith [hxz, hzy]
+  sorry
 end
 
 -- Axiom 5: the "transpose" axiom.
 lemma symm (U : set (X × X)) (hU : U ∈ entourages d) :
   {z : X × X | (z.snd, z.fst) ∈ U} ∈ entourages d :=
 begin
-  obtain ⟨ε, hε, hεU⟩ := hU,
-  use [ε, hε],
-  intros x y hxy,
-  apply hεU,
-  convert hxy using 1,
-  exact d_comm d y x
+  sorry
 end
  
 definition to_entourages : uniform_space_entourage X :=
