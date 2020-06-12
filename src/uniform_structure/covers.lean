@@ -25,6 +25,9 @@ def star_ref (P : cover X) (Q : cover X) :=
 -- this may or may not work, Lean might get confused because `<` means something else
 notation P ` <* ` Q := star_ref P Q
 
+theorem star_ref_iff (P : cover X) (Q : cover X) :
+P <* Q ↔ ∀ A ∈ P.C, ∃ U ∈ Q.C, ∀ B ∈ P.C, A ∩ B ≠ ∅ → B ⊆ U := iff.rfl
+
 /-
     {X} is a uniform cover (i.e. {X} ∈ Θ).
     If P <* Q and P is a uniform cover, then Q is also a uniform cover.
@@ -45,4 +48,4 @@ structure dist_covers (X : Type) :=
 -- if P is in Θ and P <* Q then Q is in Θ
 (star_mem (P Q : cover X) (hP : P ∈ Θ) (hPQ : P <* Q) : Q ∈ Θ)
 -- if P, Q ∈ Θ then there exists R ∈ Θ with P <* R and Q <* R
-(ub_mem (P Q : cover X) (hP : P ∈ Θ) (hQ : Q ∈ Θ) : ∃ R : cover X, R ∈ Θ ∧ P <* R ∧ Q <* R)
+(ub_mem (P Q : cover X) (hP : P ∈ Θ) (hQ : Q ∈ Θ) : ∃ R : cover X, R ∈ Θ ∧ R <* P ∧ R <* Q)
