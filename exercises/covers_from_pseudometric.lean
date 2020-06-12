@@ -42,12 +42,12 @@ iff.rfl -- true by definition
 -- of radius ε (note that ε is independent of which set in the cover)
 
 def Θ : set (cover X) :=
-  {𝒞 | ∃ ε (hε : 0 ≤ ε), ∀ x : X, ∃ U ∈ 𝒞.C, closed_ball d x ε ⊆ U}
+  {𝒞 | ∃ ε (hε : 0 < ε), ∀ x : X, ∃ U ∈ 𝒞.C, closed_ball d x ε ⊆ U}
 
 -- a cover is in Θ iff it's a closed ball cover, or the universal cover
 -- the proof is obvious
 lemma mem_Θ (𝒞 : cover X) : 𝒞 ∈ Θ d ↔
-  ∃ ε (hε : 0 ≤ ε), ∀ x : X, ∃ U ∈ 𝒞.C, closed_ball d x ε ⊆ U := iff.rfl -- true by definition
+  ∃ ε (hε : 0 < ε), ∀ x : X, ∃ U ∈ 𝒞.C, closed_ball d x ε ⊆ U := iff.rfl -- true by definition
 
 -- The exerise is to show that the 3 axioms for a distinguished family are
 -- satisfied by Θ
@@ -66,7 +66,7 @@ end
 
 -- Axiom 3: two covers have an upper bound in the <* ordering
 lemma ub_mem (P Q : cover X) (hP : P ∈ Θ d) (hQ : Q ∈ Θ d) :
-  ∃ R : cover X, R ∈ Θ d ∧ P <* R ∧ Q <* R :=
+  ∃ R : cover X, R ∈ Θ d ∧ R <* P ∧ R <* Q :=
 begin
   sorry
 end
