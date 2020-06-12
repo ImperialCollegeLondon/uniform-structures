@@ -42,12 +42,12 @@ iff.rfl -- true by definition
 -- of radius ε (note that ε is independent of which set in the cover)
 
 def Θ : set (cover X) :=
-  {𝒞 | ∃ ε (hε : 0 ≤ ε), ∀ x : X, ∃ U ∈ 𝒞.C, closed_ball d x ε ⊆ U}
+  {𝒞 | ∃ ε (hε : 0 < ε), ∀ x : X, ∃ U ∈ 𝒞.C, closed_ball d x ε ⊆ U}
 
 -- a cover is in Θ iff it's a closed ball cover, or the universal cover
 -- the proof is obvious
 lemma mem_Θ (𝒞 : cover X) : 𝒞 ∈ Θ d ↔
-  ∃ ε (hε : 0 ≤ ε), ∀ x : X, ∃ U ∈ 𝒞.C, closed_ball d x ε ⊆ U := iff.rfl -- true by definition
+  ∃ ε (hε : 0 < ε), ∀ x : X, ∃ U ∈ 𝒞.C, closed_ball d x ε ⊆ U := iff.rfl -- true by definition
 
 -- The exerise is to show that the 3 axioms for a distinguished family are
 -- satisfied by Θ
@@ -55,19 +55,43 @@ lemma mem_Θ (𝒞 : cover X) : 𝒞 ∈ Θ d ↔
 -- Axiom 1: the universal cover is in
 lemma univ_mem : univ_cover X ∈ Θ d :=
 begin
-  sorry
+  rw mem_Θ,
+  use 1,
+  split, linarith,
+  intro x,
+  use set.univ,
+  simp [univ_cover],
 end
 
 -- Axiom 2 : anything star-bigger than a distinguished cover is distinguished
 lemma star_mem (P Q : cover X) (hP : P ∈ Θ d) (hPQ : P <* Q) : Q ∈ Θ d :=
 begin
-  sorry
+  rw mem_Θ at hP ⊢,
+  rcases hP with ⟨ε, hε, hεU⟩,
+  use ε,
+  split, linarith,
+  intro x,
+  rcases hεU x with ⟨V, hV, hεV⟩,
+  rw star_ref_iff at hPQ,
+  specialize hPQ V hV,
+  rcases hPQ with ⟨W, hW, hVW⟩,
+  use W,
+  use hW,
+  refine set.subset.trans hεV (hVW V hV _),
+  rw set.ne_empty_iff_nonempty,
+  use x,
+  simp,
+  apply hεV,
+  rw mem_closed_ball,
+  rw d_self d x,
+  linarith,
 end
 
 -- Axiom 3: two covers have an upper bound in the <* ordering
 lemma ub_mem (P Q : cover X) (hP : P ∈ Θ d) (hQ : Q ∈ Θ d) :
-  ∃ R : cover X, R ∈ Θ d ∧ P <* R ∧ Q <* R :=
+  ∃ R : cover X, R ∈ Θ d ∧ R <* P ∧ R <* Q :=
 begin
+  rw mem_Θ at hP hQ,
   sorry
 end
  
