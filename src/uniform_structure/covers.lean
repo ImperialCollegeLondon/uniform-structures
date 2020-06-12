@@ -23,7 +23,7 @@ def star_ref (P : cover X) (Q : cover X) :=
 ∀ A ∈ P.C, ∃ U ∈ Q.C, ∀ B ∈ P.C, A ∩ B ≠ ∅ → B ⊆ U
 
 -- this may or may not work, Lean might get confused because `<` means something else
-notation P `<*` Q := star_ref P Q
+notation P ` <* ` Q := star_ref P Q
 
 /-
     {X} is a uniform cover (i.e. {X} ∈ Θ).
