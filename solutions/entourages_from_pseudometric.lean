@@ -123,8 +123,7 @@ begin
   apply hεU,
   apply q,
   cases x,
-  apply p4,,
-  sorry
+  apply p4,
 end
 
 -- Axiom 5: the "transpose" axiom.
