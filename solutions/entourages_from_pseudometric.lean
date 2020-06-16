@@ -98,7 +98,32 @@ lemma comp (U : set (X × X)) (hU : U ∈ entourages d) :
  ∃ (V : set (X × X)) (H : V ∈ entourages d), V ∘ V ⊆ U :=
 begin
   obtain ⟨ε, hε, hεU⟩ := hU,
-  --have (V := set (X x X)),
+  use {z : X × X | d z.1 z.2 ≤ ε/2},
+  split,
+  rw mem_entourages,
+  use ε/2,
+  split,
+  linarith,
+  tauto,
+  intro x,
+  intro h,
+  have q: d x.1 x.2 ≤ ε,
+  have s: ∃ z, (x.1, z) ∈ {z : X × X | d z.1 z.2 ≤ ε/2} ∧ (z, x.2) ∈ {z : X × X | d z.1 z.2 ≤ ε/2},
+  rw ← mem_comp_ent,
+  apply h,
+  obtain ⟨z, hz1, hz2⟩ := s,
+  have p1: d x.1 z ≤ ε/2,
+  apply hz1,
+  have p2: d z x.2 ≤ ε/2,
+  apply hz2,
+  have p3 : d x.1 x.2 ≤ d x.1 z + d z x.2,
+  apply d_triangle d,
+  linarith,
+  have p4: (x.1, x.2) ∈ U,
+  apply hεU,
+  apply q,
+  cases x,
+  apply p4,,
   sorry
 end
 
