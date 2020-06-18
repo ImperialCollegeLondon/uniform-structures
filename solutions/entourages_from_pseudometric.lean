@@ -99,7 +99,15 @@ lemma comp (U : set (X × X)) (hU : U ∈ entourages d) :
 begin
   obtain ⟨ε, hε, hεU⟩ := hU,
   --have (V := set (X x X)),
-  sorry
+  use {z : X × X | d z.1 z.2 ≤ ε/2},
+  split, use ε/2, split, linarith, intros, assumption,
+  rintro ⟨x,y⟩ h,
+  apply hεU,
+  rw mem_comp_ent at h,
+  rcases h with ⟨z, hxz, hzy⟩,
+  dsimp at *, 
+  calc d x y ≤ d x z + d z y : d_triangle d x z y
+    ...      ≤ ε : by linarith [hxz, hzy]
 end
 
 -- Axiom 5: the "transpose" axiom.
