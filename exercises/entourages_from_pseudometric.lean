@@ -41,7 +41,6 @@ begin
   sorry
 end
 
-
 -- Axiom 2: anything bigger than an entourage is an entourage
 lemma bigger (U V : set (X × X)) (hU : U ∈ entourages d) (hUV : U ⊆ V) :
   V ∈ entourages d :=
